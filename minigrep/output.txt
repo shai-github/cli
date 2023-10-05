@@ -1,0 +1,3 @@
+Searching for to in file sample.txt
+All the great books of the past and all the ones yet to come are made with these words. 
+All you must learn to do is to use them well and in the right places.
