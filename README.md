@@ -4,7 +4,7 @@ This is a version of the CLI App outlined in [The Rust Programming Language](htt
 
 ### Running the program
 
-To run the program, you can use the `sample.txt` file or use your own text file. Run the following command to check for substrings across all lines in the text file and save valid results in an output text file:
+To run the program, you can use the `sample.txt` file or upload your own text file. Run the following command to check for substrings across all lines in the text file and save valid results in an output text file:
 
 ```
 cargo run <query> <text file> > output.txt
@@ -16,7 +16,7 @@ For example, you can run the following:
 cargo run to sample.txt > output.txt
 ```
 
-This will result in the following results in the `output.txt` file
+This will result in the following lines stored in the `output.txt` file
 
 ```
 Searching for to in file sample.txt
