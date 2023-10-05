@@ -1,21 +1,44 @@
 use std::env;
 use std::fs;
+use std::process;
+use std::error::Error;
 
 fn main() {
-    // create a vector of strings
-    // the args function returns an iterator over the arguments passed to the program
-    // the collect function will turn that iterator into a collect function
     let args: Vec<String> = env::args().collect();
+    let config = Config::new(&args).unwrap_or_else(|error| {
+        println!("Problem parsing arguments: {}", error);
+        process::exit(1);
+    });
 
-    let query = &args[1];
-    let filename = &args[2];
+    println!("Searching for {} in file {}", config.query, config.filename);
 
-    println!("Searching for {query} in file {filename}");
+    if let Err(e) = run(config) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
+}
 
-    // if file found, will return contents of file as a string
-    // if file not found, will return an error
-    let contents = fs::read_to_string(filename)
-        .expect("The file was not read successfully");
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
+    println!("With text:\n{}", contents);
 
-    println!("{contents}")
+    Ok(())
+}
+
+struct Config {
+    query: String,
+    filename: String,
+}
+
+impl Config {
+    fn new(args: &[String]) -> Result<Config, &str> {
+        if args.len() < 3 {
+            return Err("Not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let filename = args[2].clone();
+
+        Ok(Config { query, filename })
+    }
 }
